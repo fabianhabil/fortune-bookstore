@@ -18,10 +18,10 @@ type ORMPathType = 'entities' | 'migrations' | 'subscribers';
  * * It accepts from the `build` folder and searches for `.js` files
  */
 function pathToLoadORM(type: ORMPathType) {
-    const startDir = (config.isDev ? 'src' : 'build');
+    const startDir = config.isDev ? 'src' : 'build';
 
     let middleExt: string;
-    const lastExt = (config.isDev ? 'ts' : 'js');
+    const lastExt = config.isDev ? 'ts' : 'js';
 
     switch (type) {
         case 'entities':
@@ -39,8 +39,7 @@ function pathToLoadORM(type: ORMPathType) {
 }
 
 export const appDataSource = new DataSource({
-    type: 'postgres',
-
+    type: 'mysql',
     host: config.db.host,
     port: config.db.port,
     username: config.db.username,
@@ -54,5 +53,5 @@ export const appDataSource = new DataSource({
 
     entities: [pathToLoadORM('entities')],
     migrations: [pathToLoadORM('migrations')],
-    subscribers: [pathToLoadORM('subscribers')],
+    subscribers: [pathToLoadORM('subscribers')]
 });

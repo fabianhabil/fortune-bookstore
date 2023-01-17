@@ -6,11 +6,8 @@ const SECRET_LENGTH = 64;
 const SECRET_FORMAT: BufferEncoding = 'hex';
 const ENV_FILE = '.env';
 
-
 function generateSecret() {
-    return crypto
-        .randomBytes(SECRET_LENGTH)
-        .toString(SECRET_FORMAT);
+    return crypto.randomBytes(SECRET_LENGTH).toString(SECRET_FORMAT);
 }
 
 function replaceLineWithKey(line: string): string {
