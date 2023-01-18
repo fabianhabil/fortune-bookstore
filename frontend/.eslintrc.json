@@ -17,7 +17,10 @@
     },
     "plugins": ["@typescript-eslint", "import"],
     "rules": {
-        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            { "argsIgnorePattern": "^_" }
+        ],
         // "no-nested-ternary": "off",
         // "@typescript-eslint/no-explicit-any": "off",
         // "linebreak-style": 0,
@@ -39,12 +42,25 @@
         "@typescript-eslint/prefer-optional-chain": "error",
         "@typescript-eslint/prefer-nullish-coalescing": "error",
         "@typescript-eslint/class-literal-property-style": ["error", "fields"],
-        "@typescript-eslint/consistent-indexed-object-style": ["error", "record"],
-        "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+        "@typescript-eslint/consistent-indexed-object-style": [
+            "error",
+            "record"
+        ],
+        "@typescript-eslint/consistent-type-definitions": [
+            "error",
+            "interface"
+        ],
         "@typescript-eslint/member-delimiter-style": ["error"],
-        "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }],
-        "@typescript-eslint/consistent-type-exports": ["error", { "fixMixedExportsWithInlineTypeSpecifier": true }],
+        "@typescript-eslint/consistent-type-imports": [
+            "error",
+            { "prefer": "type-imports" }
+        ],
+        "@typescript-eslint/consistent-type-exports": [
+            "error",
+            { "fixMixedExportsWithInlineTypeSpecifier": true }
+        ],
 
+        "@next/next/no-img-element": "off",
         // Import
         "import/first": "error",
         "import/no-absolute-path": "error",
