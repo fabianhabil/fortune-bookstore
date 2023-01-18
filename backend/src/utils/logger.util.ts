@@ -4,8 +4,6 @@ import config from '../configs/config';
 import { createLogger, format, transports } from 'winston';
 import { DateTime } from 'luxon';
 
-const DATETIME_FORMAT = 'yyyy-MM-dd - HH:mm:ss ZZ';
-
 function customPrintFormat() {
     return format.printf(
         ({ level, message, timestamp }) => `[${timestamp}] ${level}: ${message}`,
@@ -13,8 +11,10 @@ function customPrintFormat() {
 }
 
 const customTimestampFormat = format((info) => {
+    const loggerDateFormat = 'yyyy-MM-dd - HH:mm:ss ZZ';
     const currDate = DateTime.now();
-    info.timestamp = currDate.toFormat(DATETIME_FORMAT);
+
+    info.timestamp = currDate.toFormat(loggerDateFormat);
 
     return info;
 });

@@ -1,7 +1,7 @@
-export type TokenType = 'ACCESS' | 'REFRESH';
+export type TokenType = 'access' | 'refresh';
 
 export interface UserPayload {
-    id: number;
+    idUser: number;
 }
 
 export interface AuthTokens {

@@ -1,23 +1,36 @@
 import morgan from 'morgan';
 import logger from '../utils/logger.util';
 
+import { Service } from 'typedi';
+import { Middleware } from 'routing-controllers';
+
+import type { NextFunction, Request, Response } from 'express';
+import type { ExpressMiddlewareInterface } from 'routing-controllers';
 import type { StreamOptions } from 'morgan';
 
-const LOGGING_FORMAT =
-    '":method :url" :status - ' +
-    ':response-time ms ":user-agent"';
+@Service()
+@Middleware({ type: 'after' })
+export class LoggerMiddleware implements ExpressMiddlewareInterface {
 
-const streamOptions: StreamOptions = {
-    write(str) {
-        logger.info(str.trim());
-    },
-};
+    private readonly logFormat: string;
+    private readonly streamOption: StreamOptions;
 
-const handleLogging = morgan(
-    LOGGING_FORMAT,
-    {
-        stream: streamOptions,
-    },
-);
+    constructor() {
+        this.logFormat =
+            '":method :url" :status - ' +
+            ':response-time ms ":user-agent"';
 
-export default handleLogging;
+        this.streamOption = {
+            write(str) {
+                logger.info(str.trim());
+            },
+        };
+
+    }
+
+    use(req: Request, res: Response, next: NextFunction) {
+        const logging = morgan(this.logFormat, { stream: this.streamOption });
+        return logging(req, res, next);
+    }
+
+}

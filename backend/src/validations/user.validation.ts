@@ -1,70 +1,47 @@
-import joi from 'joi';
+import {
+    IsString,
+    MaxLength,
+    IsEmail,
+    IsNumberString,
+    IsDateString,
+} from 'class-validator';
 
-function validatePhone(val: string) {
-    const res = val.match(/[0-9]+/g);
+/**
+ * - (?=.*\d) is checking for numbers between 0-9.
+ * - (?=.*[A-Z]) is checking for uppercase characters.
+ * - (?=.*[a-z]) is checking for lowercase characters.
+ * - (?=.*[\\?!@#$%^&*()\-_=+{};:,<>.]) is checking for special characters.
+ * - {8,64} means a minimum of 8 characters, and maximum of 64 characters.
+ */
+// eslint-disable-next-line max-len
+// const passwordRegex = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[\\?!@#$%^&*()\-_=+{};:,<>.]).{8,64}/;
 
-    if (res?.length && val === res[0]) {
-        return val;
-    }
+export class LoginDTO {
 
-    throw Error('Invalid phone number');
+    @IsEmail()
+    @MaxLength(64)
+    email!: string;
+
+    @IsString()
+    password!: string;
+
 }
 
-const passwordSchema = joi.string()
-    .min(8)
-    .max(64)
+export class RegisterDTO extends LoginDTO {
 
-    .regex(/[0-9]/)
-    .rule({ message: '{#label} requires at least a number' })
+    @IsString()
+    @MaxLength(64)
+    name!: string;
 
-    .regex(/[a-z]/)
-    .rule({ message: '{#label} requires at least a lowercase character' })
+    @IsNumberString()
+    @MaxLength(32)
+    phone!: string;
 
-    .regex(/[A-Z]/)
-    .rule({ message: '{#label} requires at least an uppercase character' })
+    @IsString()
+    @MaxLength(255)
+    alamat!: string;
 
-    .regex(/[^a-zA-Z\d]/)
-    .rule({ message: '{#label} requires at least a special character' });
+    @IsDateString()
+    tglLahir!: Date;
 
-export interface LoginType {
-    email: string;
-    password: string;
 }
-
-export interface RegisterType extends LoginType {
-    fullName: string;
-    phone: string;
-}
-
-export const loginSchema = joi.object<LoginType>({
-    email: joi.string()
-        .max(64)
-        .email()
-        .required(),
-
-    password: joi.string()
-        .min(8)
-        .max(64)
-        .required(),
-});
-
-export const registerSchema = joi.object<RegisterType>({
-    email: joi.string()
-        .max(64)
-        .email()
-        .required(),
-
-    password: passwordSchema.required(),
-
-    fullName: joi.string()
-        .max(64)
-        .required(),
-
-    phone: joi.string()
-        .max(32)
-
-        .custom(validatePhone)
-        .rule({ message: '{#label} must only be numbers' })
-
-        .required(),
-});

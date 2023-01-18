@@ -1,15 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import errorHandling from '../middlewares/error-handler.middleware';
 import { StatusCodes } from 'http-status-codes';
 import type { Response } from 'express';
 
+export const ACCESS_TOKEN_COOKIE = 'accessToken';
 export const REFRESH_TOKEN_COOKIE = 'refreshToken';
 
-export interface APIResponse<T = unknown> {
+export interface APIResponse {
     statusCode?: StatusCodes;
     success?: boolean;
     message: string;
-    data?: T;
+    data?: unknown;
 }
 
 /**
@@ -17,29 +17,19 @@ export interface APIResponse<T = unknown> {
  * Normally, there aren't any template to send responses,
  * so you don't get the help from the autocomplete.
  */
-export function sendResponse<T>(res: Response, params: APIResponse<T>) {
+export function sendResponse(res: Response, params: APIResponse) {
     const { statusCode, success, ...newParams } = params;
 
-    const isSuccess = (success ?? true);
+    const isSuccess = success ?? true;
     const code = statusCode ?? StatusCodes.OK;
 
     const response = {
-        status: (isSuccess ? 'success' : 'fail'),
-        ...newParams,
+        status: isSuccess ? 'success' : 'fail',
+        ...newParams
     };
 
     return res.status(code).json(response);
 }
-
-/**
- * User-defined error for API responses
- *
- * Instead of using `try-catch` and call {@link sendResponse} on every error,
- * we could just make a error handler (for express.js) and use this class
- * to create the same effect.
- *
- * @see {@link errorHandling} for the error middleware implementation.
- */
 export class ResponseError extends Error {
 
     statusCode: StatusCodes;
@@ -55,11 +45,11 @@ export class ResponseError extends Error {
         this.statusCode = statusCode ?? StatusCodes.INTERNAL_SERVER_ERROR;
     }
 
-    static toResponseBody(error: ResponseError): APIResponse {
+    static toResponse(error: ResponseError): APIResponse {
         return {
             statusCode: error.statusCode,
             success: false,
-            message: error.message,
+            message: error.message
         };
     }
 
@@ -79,19 +69,19 @@ export const Errors = {
      */
     NO_SESSION: new ResponseError(
         "You don't have an account session",
-        StatusCodes.UNAUTHORIZED),
+        StatusCodes.UNAUTHORIZED
+    ),
 
     /**
      * User doesn't have the permission
      */
     NO_PERMISSION: new ResponseError(
         "You don't have the permission to access this content",
-        StatusCodes.FORBIDDEN),
+        StatusCodes.FORBIDDEN
+    ),
 
-    /**
-     * Cannot find the user it's trying to find
-     */
     USER_NOT_FOUND: new ResponseError(
         'Cannot find user',
-        StatusCodes.NOT_FOUND),
+        StatusCodes.NOT_FOUND
+    ),
 };

@@ -1,6 +1,7 @@
+import { dateTransformer } from '../../../utils/date.util';
 import { DateTime } from 'luxon';
-import { CreateDateColumn, DeleteDateColumn, UpdateDateColumn } from 'typeorm';
-import { dateTransformer } from '..';
+
+import { BeforeUpdate, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 export class TrackingEmbed {
 
@@ -10,7 +11,9 @@ export class TrackingEmbed {
     @UpdateDateColumn({ name: 'updated_at', transformer: dateTransformer })
     updatedAt!: DateTime;
 
-    @DeleteDateColumn({ name: 'deleted_at', transformer: dateTransformer })
-    deletedAt?: DateTime;
+    @BeforeUpdate()
+    private updateTracking() {
+        this.updatedAt = DateTime.now();
+    }
 
 }
