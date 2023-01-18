@@ -16,6 +16,7 @@ const theme = createTheme({
     },
     typography: {
         fontFamily: [
+            'Open Sans',
             'Inter',
             '-apple-system',
             'BlinkMacSystemFont',
