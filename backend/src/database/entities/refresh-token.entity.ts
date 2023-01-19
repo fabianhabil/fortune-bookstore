@@ -12,11 +12,11 @@ export class RefreshToken extends BaseEntity {
     @PrimaryColumn()
     token!: string;
 
-    @Column({ name: 'user_id' })
+    @Column({ name: 'id_user' })
     userId!: number;
 
     @ManyToOne(() => User)
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'id_user' })
     user?: User;
 
     @Column(() => TrackingEmbed, { prefix: false })
