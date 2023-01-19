@@ -16,13 +16,12 @@ const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
                 <Typography
                     sx={{
                         fontSize: '16px',
-                        textDecoration: 'underline',
-                        textUnderlineOffset: '6px',
-                        textDecorationThickness: '2px',
                         '&:hover': {
+                            textDecoration: 'underline',
+                            textUnderlineOffset: '6px',
+                            textDecorationThickness: '2px',
                             textDecorationColor: '#6C63FF'
-                        },
-                        transition: 'all .1s ease-in'
+                        }
                     }}
                 >
                     {title}
