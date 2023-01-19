@@ -69,8 +69,8 @@ const HomePage = () => {
                             >
                                 From applied literature to educational
                                 resources, Fortune Bookstore is your favorite
-                                lovable bookstore have a lot of textbooks to
-                                offer you.
+                                lovable bookstore that have a lot of textbooks
+                                to offer you.
                             </Typography>
                         </Grid>
                         <Grid item>

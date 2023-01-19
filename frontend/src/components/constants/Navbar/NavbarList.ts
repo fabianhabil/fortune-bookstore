@@ -6,5 +6,6 @@ export interface NavbarListTypes {
 export const NavbarList: NavbarListTypes[] = [
     { href: '/browse', title: 'Browse Books' },
     { href: '/login', title: 'Login' },
-    { href: '/register', title: 'Register' }
+    { href: '/register', title: 'Register' },
+    { href: '/dashboard', title: 'Dashboard' }
 ];
