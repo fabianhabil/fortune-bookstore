@@ -8,13 +8,14 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import axios, { isAxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { textFieldStyles } from '@/components/atoms/TextField/TextField';
 import ToastError from '@/components/atoms/Toast/ToastError';
 import ToastSuccess from '@/components/atoms/Toast/ToastSuccess';
 import { useRouter } from 'next/router';
+import API from '@/api/axios-instance';
 
 const LoginPage = () => {
     const styles = textFieldStyles();
@@ -28,27 +29,24 @@ const LoginPage = () => {
 
     const loginAccount = async () => {
         try {
-            const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/login/`,
-                login
-            );
+            const response = await API.post('/auth/login', login, {
+                withCredentials: true
+            });
             if (response) {
                 console.log(response);
                 localStorage.setItem(
                     'data',
-                    JSON.stringify(response.data.user)
+                    JSON.stringify(response.data.data)
                 );
                 ToastSuccess('Login Success!');
                 router.push('/');
             }
         } catch (e) {
             if (isAxiosError(e)) {
-                if (e?.response?.status === 401) {
-                    ToastError('Invalid Email or Password!');
-                } else if (e?.response?.status === 400) {
-                    ToastError('Email and Password cannot be empty!');
-                } else {
-                    ToastError('Server Error!');
+                if (e?.response?.status === 400) {
+                    ToastError('Invalid credentials!');
+                } else if (e?.response?.status === 404) {
+                    ToastError('Account not found!');
                 }
             } else {
                 ToastError('Unexpected Error!');
@@ -60,10 +58,8 @@ const LoginPage = () => {
         const data = JSON.parse(localStorage.getItem('data') as string);
         if (data) {
             const notice = 'Already Logged in!';
+            router.push('/');
             ToastError(notice);
-            setTimeout(() => {
-                router.push('/');
-            }, 500);
         }
     }, [router]);
 
@@ -71,7 +67,7 @@ const LoginPage = () => {
         <>
             <Grid
                 container
-                sx={{ minHeight: '100vh', backgroundColor: '#BAEAFA' }}
+                sx={{ minHeight: '100vh', backgroundColor: '#CEEFFC' }}
                 alignItems='center'
                 justifyContent='center'
             >
