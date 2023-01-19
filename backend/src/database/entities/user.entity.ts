@@ -10,12 +10,12 @@ export enum UserRole{
 export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn({ name: 'id_user' })
-    idUser!: number;
+    userId!: number;
 
     @Column({ name: 'nama', length: 64 })
     name!: string;
 
-    @Column({ length: 64 })
+    @Column({ length: 64, unique: true })
     email!: string;
 
     @Column({ length: 64 })
