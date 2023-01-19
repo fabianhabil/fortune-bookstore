@@ -20,7 +20,7 @@ async function insertData() {
     const users: User[] = [
         User.create({
             name: 'Super Admin',
-            email: 'superadmin@admin.com',
+            email: 'admin@admin.com',
             password: await hashPassword('123'),
             alamat: '-',
             tglLahir: new Date('2003-03-03'),
@@ -29,7 +29,7 @@ async function insertData() {
         }),
         User.create({
             name: 'Fabian Habil',
-            email: 'fabianhabilramdhan@gmail.com',
+            email: 'fabian@gmail.com',
             password: await hashPassword('123'),
             alamat: 'Bandung',
             tglLahir: new Date('2003-03-27'),
