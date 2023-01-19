@@ -11,8 +11,14 @@ module.exports = {
         'next'
     ],
     parser: '@typescript-eslint/parser',
+    // parserOptions: {
+    //     ecmaVersion: 'latest',
+    //     project: ['./tsconfig.json'],
+    //     tsconfigRootDir: __dirname
+    // },
     parserOptions: {
         ecmaVersion: 'latest',
+        sourceType: 'module',
         project: ['./tsconfig.json'],
         tsconfigRootDir: __dirname
     },
@@ -130,7 +136,7 @@ module.exports = {
         'comma-spacing': 'error',
         'comma-style': 'error',
         'computed-property-spacing': 'error',
-        'max-depth': 'error',
+        'max-depth': 'off',
         'dot-notation': 'error',
         'key-spacing': 'error',
         'keyword-spacing': 'error',

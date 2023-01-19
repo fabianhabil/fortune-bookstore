@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "clean": "rimraf ./next",
+    "clean": "rimraf ./.next",
     "build": "npm run clean && next build",
     "start": "next start",
     "lint": "next lint"
@@ -34,6 +34,7 @@
     "typescript": "4.9.4"
   },
   "devDependencies": {
+    "react-icons": "^4.7.1",
     "rimraf": "^4.1.1"
   }
 }
