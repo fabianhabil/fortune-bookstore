@@ -14,8 +14,8 @@
     "parserOptions": {
         "ecmaVersion": "latest",
         "project": [
-            "./backend/tsconfig.base.json",
-            "./backend/tsconfig.json"
+            "./tsconfig.base.json",
+            "./tsconfig.json"
         ]
     },
     "plugins": [
@@ -171,7 +171,7 @@
             }
         ],
         "padded-blocks": [
-            "error",
+            "off",
             {
                 "classes": "always"
             }
