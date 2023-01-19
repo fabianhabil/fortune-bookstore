@@ -1,16 +1,6 @@
-import type { EmotionCache } from '@emotion/cache';
-import type { EmotionCriticalToChunks } from '@emotion/server/create-instance';
-import createEmotionServer from '@emotion/server/create-instance';
-import type {
-    AppPropsType,
-    DocumentInitialProps,
-    RenderPage
-} from 'next/dist/shared/lib/utils';
-import type { DocumentContext } from 'next/document';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
-import type { NextRouter } from 'next/router';
-import { Children } from 'react';
-import createEmotionCache from '@/styles/createEmotionCache';
+import { ServerStyleSheets } from '@mui/styles';
+import * as React from 'react';
 
 // eslint-disable-next-line import/exports-last
 export default class MyDocument extends Document {
@@ -48,42 +38,64 @@ export default class MyDocument extends Document {
 
 }
 
-MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-    const originalRenderPage: RenderPage = ctx.renderPage;
+MyDocument.getInitialProps = async (ctx) => {
+    // Render app and page and get the context of the page with collected side effects.
+    const sheets = new ServerStyleSheets();
+    const originalRenderPage = ctx.renderPage;
 
-    // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
-    // However, be aware that it can have global side effects.
-    const cache: EmotionCache = createEmotionCache();
-    const { extractCriticalToChunks } = createEmotionServer(cache);
-
-    /* eslint-disable */
     ctx.renderPage = () =>
         originalRenderPage({
-            enhanceApp: (App: any) => (props: AppPropsType<NextRouter, {}>) =>
-                <App emotionCache={cache} {...props} />
+            enhanceApp: (App) => (props) => sheets.collect(<App {...props} />)
         });
-    /* eslint-enable */
 
-    const initialProps: DocumentInitialProps = await Document.getInitialProps(
-        ctx
-    );
-    const emotionStyles: EmotionCriticalToChunks = extractCriticalToChunks(
-        initialProps.html
-    );
-    const emotionStyleTags: JSX.Element[] = emotionStyles.styles.map(
-        (style) => (
-            <style
-                data-emotion={`${style.key} ${style.ids.join(' ')}`}
-                // eslint-disable-next-line react/no-unknown-property
-                key={style.key}
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: style.css }}
-            />
-        )
-    );
+    const initialProps = await Document.getInitialProps(ctx);
 
     return {
         ...initialProps,
-        styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags]
+        // Styles fragment is rendered after the app and page rendering finish.
+        styles: [
+            ...React.Children.toArray(initialProps.styles),
+            sheets.getStyleElement()
+        ]
     };
 };
+
+// MyDocument.getInitialProps = async (ctx: DocumentContext) => {
+//     const originalRenderPage: RenderPage = ctx.renderPage;
+
+//     // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
+//     // However, be aware that it can have global side effects.
+//     const cache: EmotionCache = createEmotionCache();
+//     const { extractCriticalToChunks } = createEmotionServer(cache);
+
+//     /* eslint-disable */
+//     ctx.renderPage = () =>
+//         originalRenderPage({
+//             enhanceApp: (App: any) => (props: AppPropsType<NextRouter, {}>) =>
+//                 <App emotionCache={cache} {...props} />
+//         });
+//     /* eslint-enable */
+
+//     const initialProps: DocumentInitialProps = await Document.getInitialProps(
+//         ctx
+//     );
+//     const emotionStyles: EmotionCriticalToChunks = extractCriticalToChunks(
+//         initialProps.html
+//     );
+//     const emotionStyleTags: JSX.Element[] = emotionStyles.styles.map(
+//         (style) => (
+//             <style
+//                 data-emotion={`${style.key} ${style.ids.join(' ')}`}
+//                 // eslint-disable-next-line react/no-unknown-property
+//                 key={style.key}
+//                 // eslint-disable-next-line react/no-danger
+//                 dangerouslySetInnerHTML={{ __html: style.css }}
+//             />
+//         )
+//     );
+
+//     return {
+//         ...initialProps,
+//         styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags]
+//     };
+// };
