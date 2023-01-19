@@ -1,61 +1,49 @@
 // * max-len isn't needed here
 // * This script is very dependant on the project files
-
 /* eslint-disable max-len */
 
 import logger from '../src/utils/logger.util';
 
 import { appDataSource } from '../src/database/datasource';
-import { authService } from '../src/services/auth.service';
-import { User } from '../src/database/entities/user.entity';
-import { Todo } from '../src/database/entities/todo.entity';
-import { DateTime } from 'luxon';
+import { AuthService } from '../src/services/auth.service';
+import { faker } from '@faker-js/faker';
+import { User, UserRole } from '../src/database/entities/user.entity';
 
 // -------------------------------------------------------------------- //
 
-const DEFAULT_PHONE = '628174991828';
+const DEFAULT_PHONE_FORMAT = '+62 ### #### ####';
+const AUTH_SERVICE = new AuthService();
 
 async function insertData() {
-    const { hashPassword } = authService;
+    const { hashPassword } = AUTH_SERVICE;
 
     const users: User[] = [
         User.create({
-            fullName: 'John Doe',
-            email: 'john_doe@example.com',
-            phone: DEFAULT_PHONE,
-            password: await hashPassword('JohnDoe123?')
+            name: 'Super Admin',
+            email: 'superadmin@admin.com',
+            password: await hashPassword('123'),
+            alamat: '-',
+            tglLahir: new Date('2003-03-03'),
+            phone: '-',
+            role: UserRole.ADMIN
         }),
         User.create({
-            fullName: 'Alvian',
-            email: 'alvian@example.com',
-            phone: DEFAULT_PHONE,
-            password: await hashPassword('Alvian123?')
+            name: 'Fabian Habil',
+            email: 'fabianhabilramdhan@gmail.com',
+            password: await hashPassword('123'),
+            alamat: 'Bandung',
+            tglLahir: new Date('2003-03-27'),
+            phone: faker.phone.number(DEFAULT_PHONE_FORMAT),
+            role: UserRole.USER
         })
     ];
     await User.save(users);
-
-    const todos: Todo[] = [
-        Todo.create({
-            user: users[0],
-            content: 'Play VALORANT tonight'
-        }),
-        Todo.create({
-            user: users[1],
-            content: 'Do android mobile homework',
-            track: {
-                updatedAt: DateTime.utc().minus({ days: 2, hours: 6 }),
-                createdAt: DateTime.utc().minus({ days: 3 })
-            }
-        })
-    ];
-    await Todo.save(todos);
-
-    return { users, todos };
 }
 
 // -------------------------------------------------------------------- //
 
-appDataSource.initialize()
+appDataSource
+    .initialize()
     .then(async () => {
         await insertData();
 

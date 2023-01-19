@@ -24,6 +24,11 @@ import type { UserPayload, TokenType, AuthTokens } from '../typings/auth';
 @Service()
 export class AuthService {
 
+    /* Query SQL Login
+       userQuery = SELECT * FROM user WHERE email = body.email
+       IF MATCH
+          IF bcryptCompare userQuery.password and
+    */
     async login({ email, password }: LoginDTO): Promise<AuthTokens> {
         const foundUser = await User.findOneBy({ email });
         if (!foundUser) {

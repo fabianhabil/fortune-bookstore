@@ -34,7 +34,7 @@ export class User extends BaseEntity {
     phone!: string;
 
     @Column({ type: 'enum', default: UserRole.USER, enum: UserRole })
-    role!: string;
+    role!: UserRole;
 
     @Column(() => TrackingEmbed, { prefix: false })
     track!: TrackingEmbed;
