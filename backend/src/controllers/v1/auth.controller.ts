@@ -29,7 +29,8 @@ export class AuthController {
 
     @Post('/login')
     async login(@Res() res: Response, @Body() dto: LoginDTO) {
-        const { accessToken, refreshToken } = await this.service.login(dto);
+        const { accessToken, refreshToken, foundUser } =
+            await this.service.login(dto);
 
         res.cookie(REFRESH_TOKEN_COOKIE, refreshToken, {
             httpOnly: true,
@@ -41,7 +42,10 @@ export class AuthController {
             maxAge: ms(config.jwt.accessExpire)
         });
 
-        return sendResponse(res, { message: 'Successfully logged in' });
+        return sendResponse(res, {
+            data: foundUser,
+            message: 'Successfully logged in'
+        });
     }
 
     @Post('/register')

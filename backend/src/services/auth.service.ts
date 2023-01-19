@@ -19,7 +19,7 @@ import {
 import type { Request } from 'express';
 import type { JwtPayload } from 'jsonwebtoken';
 import type { LoginDTO, RegisterDTO } from '../validations/user.validation';
-import type { UserPayload, TokenType, AuthTokens } from '../typings/auth';
+import type { UserPayload, TokenType, LoginInfo } from '../typings/auth';
 
 @Service()
 export class AuthService {
@@ -27,14 +27,18 @@ export class AuthService {
     /* Query SQL Login
        userQuery = SELECT * FROM user WHERE email = body.email
        IF MATCH
-          IF bcryptCompare userQuery.password and
+          IF bcryptCompare userQuery.password and body.password
+          THEN GENERATE JWT TOKEN SET TO CLIENT AND RETURN userQuery
+       ELSE
+          RETURN ERROR
     */
-    async login({ email, password }: LoginDTO): Promise<AuthTokens> {
+    async login({ email, password }: LoginDTO): Promise<LoginInfo> {
         const foundUser = await User.findOneBy({ email });
+
         if (!foundUser) {
             throw new ResponseError(
                 'Account is not registered!',
-                StatusCodes.BAD_REQUEST
+                StatusCodes.NOT_FOUND
             );
         }
 
@@ -53,7 +57,7 @@ export class AuthService {
         const accessToken = await this.generateToken(foundUser, 'access');
         const refreshToken = await this.generateToken(foundUser, 'refresh');
 
-        return { accessToken, refreshToken };
+        return { accessToken, refreshToken, foundUser };
     }
 
     async register(rawUser: RegisterDTO) {
@@ -63,7 +67,7 @@ export class AuthService {
         if (foundUser) {
             throw new ResponseError(
                 'This email is already registered',
-                StatusCodes.BAD_REQUEST
+                StatusCodes.CONFLICT
             );
         }
 
@@ -102,7 +106,7 @@ export class AuthService {
         let tokenSecret: string;
 
         const signOption: jwt.SignOptions = {};
-        const payload: UserPayload = { idUser: user.idUser };
+        const payload: UserPayload = { userId: user.userId };
 
         if (tokenType === 'access') {
             tokenSecret = config.jwt.accessSecret;
@@ -158,7 +162,7 @@ export class AuthService {
 
         try {
             const payload = jwt.verify(token, secret) as JwtPayload;
-            return { idUser: payload.idUser } as UserPayload;
+            return { userId: payload.userId } as UserPayload;
         } catch (err) {
             // token is invalid, so returning `undefined` instead
         }
