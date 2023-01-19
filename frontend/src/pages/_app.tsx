@@ -12,6 +12,7 @@ import theme from '@/styles/theme';
 import type { NextPage } from 'next';
 // eslint-disable-next-line import/extensions
 import '@/styles/globals.css';
+import { AuthContextProvider } from '@/contexts/AuthContext/AuthContext';
 
 type Page<P = unknown> = NextPage<P> & {
     getLayout?: (_page: ReactNode) => ReactNode;
@@ -42,41 +43,46 @@ const MyApp: FunctionComponent<MyAppProps> = (
 
     return (
         <CacheProvider value={emotionCache}>
-            {getLayout(
-                <>
-                    <Head>
-                        <meta
-                            name='description'
-                            content='Fortune Bookstore is a fictional bookstore created for final project database'
-                        />
-                        <meta
-                            name='viewport'
-                            content='initial-scale=1, width=device-width'
-                        />
-                        <meta property='og:type' content='website' />
-                        <meta property='og:title' content='Fortune Bookstore' />
-                        <meta
-                            property='og:description'
-                            content='Fortune Bookstore'
-                        />
-                    </Head>
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline />
-                        <Component {...pageProps} />
-                        <ToastContainer
-                            position='top-right'
-                            autoClose={5000}
-                            hideProgressBar={false}
-                            newestOnTop={true}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable
-                            pauseOnHover
-                        />
-                    </ThemeProvider>
-                </>
-            )}
+            <AuthContextProvider>
+                {getLayout(
+                    <>
+                        <Head>
+                            <meta
+                                name='description'
+                                content='Fortune Bookstore is a fictional bookstore created for final project database'
+                            />
+                            <meta
+                                name='viewport'
+                                content='initial-scale=1, width=device-width'
+                            />
+                            <meta property='og:type' content='website' />
+                            <meta
+                                property='og:title'
+                                content='Fortune Bookstore'
+                            />
+                            <meta
+                                property='og:description'
+                                content='Fortune Bookstore'
+                            />
+                        </Head>
+                        <ThemeProvider theme={theme}>
+                            <CssBaseline />
+                            <Component {...pageProps} />
+                            <ToastContainer
+                                position='top-right'
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={true}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                            />
+                        </ThemeProvider>
+                    </>
+                )}
+            </AuthContextProvider>
         </CacheProvider>
     );
 };
