@@ -1,6 +1,6 @@
 import ContentWrapper from '@/components/atoms/Layout/ContentWrapper/ContentWrapper';
 import Head from 'next/head';
-import Navbar from '@/components/molecules/Navbar/Navbar';
+import Navbar from '@/components/template/Navbar/Navbar';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/contexts/AuthContext/AuthContext';
 

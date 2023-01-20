@@ -12,6 +12,7 @@ import theme from '@/styles/theme';
 import type { NextPage } from 'next';
 // eslint-disable-next-line import/extensions
 import '@/styles/globals.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import { AuthContextProvider } from '@/contexts/AuthContext/AuthContext';
 
 type Page<P = unknown> = NextPage<P> & {
@@ -47,6 +48,7 @@ const MyApp: FunctionComponent<MyAppProps> = (
                 {getLayout(
                     <>
                         <Head>
+                            <title>Fortune Bookstore</title>
                             <meta
                                 name='description'
                                 content='Fortune Bookstore is a fictional bookstore created for final project database'

@@ -1,4 +1,4 @@
-import LoginPage from '@/components/template/Login/Login';
+import RegisterPage from '@/components/template/Register/Register';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
@@ -6,9 +6,9 @@ const Home: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Fortune Bookstore | Login</title>
+                <title>Fortune Bookstore | Register</title>
             </Head>
-            <LoginPage />
+            <RegisterPage />
         </>
     );
 };

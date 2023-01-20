@@ -1,12 +1,12 @@
 export interface UserDataType {
-    alamat: string;
-    email: string;
+    userId?: number;
     name: string;
+    email: string;
+    alamat: string;
+    saldo?: number;
+    tglLahir: Date;
     phone: string;
     role?: number;
-    saldo?: number;
-    userId?: number;
-    tglLahir: Date;
 }
 
 export interface UserRegisterType extends UserDataType {

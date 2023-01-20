@@ -10,14 +10,16 @@ import {
 } from '@mui/material';
 import { isAxiosError } from 'axios';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { textFieldStyles } from '@/components/atoms/TextField/TextField';
 import ToastError from '@/components/atoms/Toast/ToastError';
 import ToastSuccess from '@/components/atoms/Toast/ToastSuccess';
 import { useRouter } from 'next/router';
-import API from '@/api/axios-instance';
+import api from '@/api/axios-instance';
+import { AuthContext } from '@/contexts/AuthContext/AuthContext';
 
 const LoginPage = () => {
+    const { isLoggedIn } = useContext(AuthContext)!;
     const styles = textFieldStyles();
     const [login, setLogin] = useState<{ email: string; password: string }>({
         email: '',
@@ -29,13 +31,13 @@ const LoginPage = () => {
 
     const loginAccount = async () => {
         try {
-            const response = await API.post('/auth/login', login, {
+            const response = await api.post('/auth/login', login, {
                 withCredentials: true
             });
             if (response) {
                 console.log(response);
                 localStorage.setItem(
-                    'data',
+                    'user-data',
                     JSON.stringify(response.data.data)
                 );
                 ToastSuccess('Login Success!');
@@ -55,13 +57,15 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        const data = JSON.parse(localStorage.getItem('data') as string);
-        if (data) {
+        const logged = isLoggedIn();
+        if (logged) {
             const notice = 'Already Logged in!';
-            router.push('/');
             ToastError(notice);
+            setTimeout(() => {
+                router.push('/');
+            }, 1000);
         }
-    }, [router]);
+    }, [router, isLoggedIn]);
 
     return (
         <>
@@ -71,7 +75,7 @@ const LoginPage = () => {
                 alignItems='center'
                 justifyContent='center'
             >
-                <Grid item xs={12} md={'auto'} sm={8} sx={{ p: 2 }}>
+                <Grid item xs={12} md={'auto'} sm={8} sx={{ p: 4 }}>
                     <Grid container direction='column' spacing={3}>
                         <Grid
                             item
@@ -79,15 +83,17 @@ const LoginPage = () => {
                             alignItems='center'
                             justifyContent='center'
                         >
-                            <img
-                                src='/logo/logo-transparent.png'
-                                alt='logo-transparent'
-                                style={{
-                                    maxWidth: '190px',
-                                    width: '100%',
-                                    height: 'auto'
-                                }}
-                            />
+                            <Link href='/'>
+                                <img
+                                    src='/logo/logo-transparent.png'
+                                    alt='logo-transparent'
+                                    style={{
+                                        maxWidth: '190px',
+                                        width: '100%',
+                                        height: 'auto'
+                                    }}
+                                />
+                            </Link>
                         </Grid>
                         <Grid item>
                             <Typography

@@ -3,4 +3,6 @@ export interface AuthContextType<T> {
     userData: T | null;
     getUserData: () => void;
     loading: boolean;
+    isLoggedIn: () => boolean;
+    logout: () => void;
 }
