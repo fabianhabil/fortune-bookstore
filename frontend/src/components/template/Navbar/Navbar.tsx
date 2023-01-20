@@ -1,6 +1,6 @@
 import { AppBar, Container, Grid, Toolbar } from '@mui/material';
 import Link from 'next/link';
-import Drawer from '../Drawer/Drawer';
+import DrawerComponent from '../../molecules/Drawer/Drawer';
 
 const Navbar = () => {
     return (
@@ -36,11 +36,8 @@ const Navbar = () => {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Drawer />
+                                <DrawerComponent />
                             </Grid>
-                            {/* <Grid item>
-                                <TopDrawer />
-                            </Grid> */}
                         </Grid>
                     </Container>
                 </Toolbar>

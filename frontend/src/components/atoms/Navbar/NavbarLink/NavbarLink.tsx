@@ -1,32 +1,62 @@
-import { Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import Link from 'next/link';
+import type { NavbarListTypes } from '@/components/constants/Navbar/NavbarList';
 
-interface NavbarLinkProps {
-    href: string;
-    title: string;
-}
+const NavbarLink: React.FC<NavbarListTypes> = ({
+    href,
+    title,
+    hideIfLoggedIn,
+    adminPage,
+    isAuthenticated,
+    isAdmin,
+    onDrawer
+}) => {
+    const render = (): boolean => {
+        if (isAuthenticated) {
+            if (hideIfLoggedIn) {
+                return false;
+            } else {
+                if (adminPage) {
+                    if (isAdmin) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        } else {
+            if (!adminPage) return true;
+            return false;
+        }
+    };
 
-const NavbarLink: React.FC<NavbarLinkProps> = ({ href, title }) => {
     return (
         <>
-            <Link
-                href={href}
-                style={{ color: 'inherit', textDecoration: 'none' }}
-            >
-                <Typography
-                    sx={{
-                        fontSize: '16px',
-                        '&:hover': {
-                            textDecoration: 'underline',
-                            textUnderlineOffset: '6px',
-                            textDecorationThickness: '2px',
-                            textDecorationColor: '#6C63FF'
-                        }
+            <Grid item sx={{ display: render() ? '' : 'none' }}>
+                <Link
+                    href={href}
+                    style={{
+                        color: 'inherit',
+                        textDecoration: 'none'
                     }}
                 >
-                    {title}
-                </Typography>
-            </Link>
+                    <Typography
+                        sx={{
+                            fontSize: onDrawer ? '18px' : '16px',
+                            '&:hover': {
+                                textDecoration: 'underline',
+                                textUnderlineOffset: '6px',
+                                textDecorationThickness: '2px',
+                                textDecorationColor: '#6C63FF'
+                            }
+                        }}
+                    >
+                        {title}
+                    </Typography>
+                </Link>
+            </Grid>
         </>
     );
 };
