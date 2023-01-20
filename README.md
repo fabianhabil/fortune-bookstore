@@ -34,68 +34,68 @@ Running:
 
 ```sh
 # compiles the project to `build` directory
-yarn compile
+npm run compile
 
 # diagnose the TS compiler
-yarn compile:debug
+npm run compile:debug
 
 # starts the program (must be compiled first)
-yarn start
+npm run start
 
 # Runs the server in Development environment (no compiled files)
-yarn dev
+npm run dev
 ```
 
 Data seeding:
 
 ```sh
 # Add a bunch of prepared data in `seeder.ts` file
-yarn seed
+npm run seed
 ```
 
 Cleans the compiled files (in `build` directory):
 
 ```sh
-yarn clean
+npm run clean
 ```
 
 Linting:
 
 ```sh
 # runs ESLint to `src` directory
-yarn lint
+npm run lint
 
 # fixes ESLint errors (for fixable errors only)
-yarn lint:fix
+npm run lint:fix
 ```
 
 TypeORM:
 
 ```sh
 # shows TypeORM commands
-yarn typeorm -h
+npm run typeorm -h
 
 # shows migration status
-yarn migration:show
+npm run migration:show
 
 # generates a migration based recent schema changes
-yarn migration:generate <migration-name>
+npm run migration:generate <migration-name>
 
 # creates a new migration
-yarn migration:create <migration-name>
+npm run migration:create <migration-name>
 
 # runs all pending migrations
-yarn migration:run
+npm run migration:run
 
 # reverts all migrations
-yarn migration:revert
+npm run migration:revert
 ```
 
 JSONWebToken:
 
 ```sh
 # generate JWT secrets (both access and refresh secrets)
-yarn jwt:generate
+npm run jwt:generate
 ```
 
 ## Environment Variables
