@@ -1,3 +1,6 @@
+import { BahasaBuku, Buku } from './../src/database/entities/buku.entity';
+import { KategoriBuku } from './../src/database/entities/kategori-buku.entity';
+import { Penerbit } from './../src/database/entities/penerbit.entity';
 // * max-len isn't needed here
 // * This script is very dependant on the project files
 /* eslint-disable max-len */
@@ -38,6 +41,60 @@ async function insertData() {
         })
     ];
     await User.save(users);
+
+    const penerbit: Penerbit[] = [
+        Penerbit.create({
+            penerbitId: 'test-penerbit-1',
+            nama: 'penerbit 1'
+        }),
+
+        Penerbit.create({
+            penerbitId: 'test-penerbit-2',
+            nama: 'penerbit 2'
+        })
+    ];
+
+    await Penerbit.save(penerbit);
+
+    const kategori: KategoriBuku[] = [
+        KategoriBuku.create({ nama: 'Komik' }),
+        KategoriBuku.create({ nama: 'Novel' })
+    ];
+
+    await KategoriBuku.save(kategori);
+
+    const buku: Buku[] = [
+        Buku.create({
+            name: 'Buku 1',
+            deskripsi: 'Ini Buku 1',
+            harga: 50000,
+            stok: 10,
+            jumlahHalaman: 233,
+            tanggalTerbit: new Date('2022-03-02'),
+            bahasa: BahasaBuku['BAHASA INDONESIA'],
+            berat: 0.33,
+            lebar: 9.22,
+            panjang: 9.22,
+            penerbitId: 'test-penerbit-1',
+            kategoriBukuId: 1
+        }),
+        Buku.create({
+            name: 'Buku 2',
+            deskripsi: 'Ini Buku 2',
+            harga: 65000,
+            stok: 27,
+            jumlahHalaman: 123,
+            tanggalTerbit: new Date('2022-03-10'),
+            bahasa: BahasaBuku['BAHASA INDONESIA'],
+            berat: 0.33,
+            lebar: 9.22,
+            panjang: 9.22,
+            penerbitId: 'test-penerbit-1',
+            kategoriBukuId: 2
+        })
+    ];
+
+    await Buku.save(buku);
 }
 
 // -------------------------------------------------------------------- //
