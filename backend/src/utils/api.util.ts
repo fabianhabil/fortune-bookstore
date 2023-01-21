@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { StatusCodes } from 'http-status-codes';
 import type { Response } from 'express';
 
@@ -31,7 +30,6 @@ export function sendResponse(res: Response, params: APIResponse) {
     return res.status(code).json(response);
 }
 export class ResponseError extends Error {
-
     statusCode: StatusCodes;
 
     constructor(message: string, statusCode?: StatusCodes) {
@@ -52,7 +50,6 @@ export class ResponseError extends Error {
             message: error.message
         };
     }
-
 }
 
 /**
@@ -80,8 +77,22 @@ export const Errors = {
         StatusCodes.FORBIDDEN
     ),
 
-    BOOK_NOT_FOUND: new ResponseError(
-        'Cannot find book',
-        StatusCodes.NOT_FOUND
+    BOOK_NOT_FOUND: new ResponseError('Book not found', StatusCodes.NOT_FOUND),
+
+    USER_NOT_FOUND: new ResponseError('User not found', StatusCodes.NOT_FOUND),
+
+    NOT_ENOUGH_FUND: new ResponseError(
+        'Not Enough Fund',
+        StatusCodes.BAD_REQUEST
     ),
+
+    NOT_ENOUGH_STOCK: new ResponseError(
+        'This book doesnt have enough stok!',
+        StatusCodes.BAD_REQUEST
+    ),
+
+    TRANSAKSI_NOT_FOUND: new ResponseError(
+        'Transaksi not found',
+        StatusCodes.NOT_FOUND
+    )
 };
