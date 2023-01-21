@@ -24,8 +24,8 @@ export class User extends BaseEntity {
     @Column({ length: 64 })
     alamat!: string;
 
-    @Column({ type: 'bigint', default: 0 })
-    saldo!: bigint;
+    @Column({ default: 0 })
+    saldo!: number;
 
     @Column({ name: 'tgl_lahir', type: 'date' })
     tglLahir!: Date;
