@@ -45,8 +45,8 @@ export class EditBukuDTO {
     @IsString()
     penerbitId!: string;
 
-    @IsString()
-    kategoriBukuId!: string;
+    @IsNumber()
+    kategoriBukuId!: number;
 }
 
 export class CreateBukuDTO extends EditBukuDTO {
@@ -59,6 +59,6 @@ export class CreateBukuDTO extends EditBukuDTO {
     @IsString()
     penerbitId!: string;
 
-    @IsString()
-    kategoriBukuId!: string;
+    @IsNumber()
+    kategoriBukuId!: number;
 }
