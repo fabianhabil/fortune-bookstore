@@ -1,8 +1,16 @@
 import { UserService } from './../../services/user.service';
-import { CurrentUser, Get, JsonController, Res } from 'routing-controllers';
+import {
+    Body,
+    CurrentUser,
+    Get,
+    JsonController,
+    Post,
+    Res
+} from 'routing-controllers';
 import { Service } from 'typedi';
 import { sendResponse } from '../../utils/api.util';
 import { Response } from 'express';
+import { UserPayload } from '../../typings/auth';
 
 @Service()
 @JsonController('/v1/users')
@@ -12,9 +20,25 @@ export class UserController {
     @Get('/profile')
     async getProfile(
         @Res() res: Response,
-        @CurrentUser({ required: true }) payload: number
+        @CurrentUser({ required: true }) user: UserPayload
     ) {
-        const user = await this.service.getProfile(payload);
-        return sendResponse(res, { message: 'Success', data: { user } });
+        const { userId } = user;
+        const profile = await this.service.getProfile(userId);
+        return sendResponse(res, {
+            message: 'Success getting user profile',
+            data: { profile }
+        });
+    }
+
+    @Post('/topup')
+    async topupUser(
+        @Res() res: Response,
+        @Body() dto: { saldo: number },
+        @CurrentUser({ required: true }) user: UserPayload
+    ) {
+        const { userId } = user;
+        await this.service.topup(userId, dto);
+
+        return sendResponse(res, { message: 'Topup success' });
     }
 }

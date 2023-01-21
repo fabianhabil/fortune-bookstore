@@ -4,20 +4,33 @@ import { Errors } from '../utils/api.util';
 
 @Service()
 export class UserService {
-    async getProfile(userId: number) {
+    /*  Query Selector Get User
+        SELECT * FROM user WHERE userId = body.userId
+    */
+    async getProfile(userId: number): Promise<User | null> {
         const user = User.findOne({
             where: { userId },
             select: { password: false }
         });
 
         if (!user) {
-            throw Errors.NO_SESSION;
+            throw Errors.USER_NOT_FOUND;
         }
 
         return user;
     }
 
-    async isAdmin(userId: number) {
+    /*
+
+    */
+    async topup(userId: number, dto: { saldo: number }) {
+        const user = (await this.getProfile(userId)) as User;
+        user.saldo = dto.saldo;
+
+        await user?.save();
+    }
+
+    async isAdmin(userId: number): Promise<boolean> {
         const admin = await this.getProfile(userId);
 
         if (admin?.role !== 1) {
