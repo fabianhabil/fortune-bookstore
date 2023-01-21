@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Buku } from './buku.entity';
 
 @Entity('penerbit')
 export class Penerbit extends BaseEntity {
@@ -7,4 +8,7 @@ export class Penerbit extends BaseEntity {
 
     @Column()
     nama!: string;
+
+    @OneToMany(() => Buku, (buku) => buku)
+    buku!: Buku[];
 }
