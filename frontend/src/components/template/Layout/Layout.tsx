@@ -19,6 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
         <>
             <Head>
+                <title>Fortune Bookstore</title>
                 <meta
                     name='viewport'
                     content='width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1'

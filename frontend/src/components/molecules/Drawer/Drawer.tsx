@@ -1,5 +1,5 @@
 import NavbarLink from '@/components/atoms/Navbar/NavbarLink/NavbarLink';
-import { Drawer, Grid, IconButton } from '@mui/material';
+import { Drawer, Grid, IconButton, Typography } from '@mui/material';
 import { NavbarList } from '@/components/constants/Navbar/NavbarList';
 import type { NavbarListTypes } from '@/components/constants/Navbar/NavbarList';
 import { useContext, useState } from 'react';
@@ -52,13 +52,23 @@ const DrawerComponent = () => {
                             }
                         }}
                     >
-                        <AiOutlineUser
-                            style={{
-                                fontSize: '24px'
-                            }}
+                        <Typography
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             onClick={(event: any) => handleClick(event)}
-                        />
+                            sx={{
+                                '&:hover': {
+                                    opacity: 0.7
+                                }
+                            }}
+                        >
+                            Hi,{' '}
+                            <Typography
+                                component='span'
+                                sx={{ textDecoration: 'underline' }}
+                            >
+                                {userData?.name}
+                            </Typography>
+                        </Typography>
                         <PopperAccount
                             open={open}
                             anchorEl={anchorEl}
@@ -106,8 +116,6 @@ const DrawerComponent = () => {
                                     verticalAlign: 'middle',
                                     color: 'black'
                                 }}
-                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                onClick={(event: any) => handleClick(event)}
                             />
                         </IconButton>
                         <PopperAccount
@@ -148,7 +156,7 @@ const DrawerComponent = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item sx={{ py: 3 }}>
+                    <Grid item sx={{ py: 2 }}>
                         <Grid
                             container
                             direction='column'
@@ -156,6 +164,23 @@ const DrawerComponent = () => {
                             alignItems='center'
                             spacing={2}
                         >
+                            <Grid item>
+                                <Typography
+                                    sx={{
+                                        '&:hover': {
+                                            opacity: 0.7
+                                        }
+                                    }}
+                                >
+                                    Hi,{' '}
+                                    <Typography
+                                        component='span'
+                                        sx={{ textDecoration: 'underline' }}
+                                    >
+                                        {userData?.name}
+                                    </Typography>
+                                </Typography>
+                            </Grid>
                             {NavbarList.map(
                                 (data: NavbarListTypes, index: number) => {
                                     return (

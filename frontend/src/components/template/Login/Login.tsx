@@ -59,8 +59,7 @@ const LoginPage = () => {
     useEffect(() => {
         const logged = isLoggedIn();
         if (logged) {
-            const notice = 'Already Logged in!';
-            ToastError(notice);
+            ToastError('Already Logged in!');
             setTimeout(() => {
                 router.push('/');
             }, 1000);
