@@ -16,4 +16,14 @@ export class UserService {
 
         return user;
     }
+
+    async isAdmin(userId: number) {
+        const admin = await this.getProfile(userId);
+
+        if (admin?.role !== 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
