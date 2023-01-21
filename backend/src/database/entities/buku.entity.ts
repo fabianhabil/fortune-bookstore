@@ -50,10 +50,10 @@ export class Buku extends BaseEntity {
     @Column({ type: 'double' })
     panjang!: Double;
 
-    @Column({ name: 'id_penerbit' })
+    @Column({ name: 'id_penerbit', select: false })
     penerbitId!: string;
 
-    @Column({ name: 'id_kategori_buku' })
+    @Column({ name: 'id_kategori_buku', select: false })
     kategoriBukuId!: number;
 
     @ManyToOne(() => Penerbit)
