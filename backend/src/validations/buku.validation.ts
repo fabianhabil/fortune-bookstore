@@ -25,7 +25,7 @@ export class EditBukuDTO {
     stok!: number;
 
     @IsNumber()
-    jumlah_halaman!: number;
+    jumlahHalaman!: number;
 
     @IsDecimal()
     berat!: Double;
@@ -35,18 +35,6 @@ export class EditBukuDTO {
 
     @IsDecimal()
     panjang!: Double;
-
-    @IsDateString()
-    tanggalTerbit!: Date;
-
-    @IsEnum(BahasaBuku)
-    bahasa!: BahasaBuku;
-
-    @IsString()
-    penerbitId!: string;
-
-    @IsNumber()
-    kategoriBukuId!: number;
 }
 
 export class CreateBukuDTO extends EditBukuDTO {
