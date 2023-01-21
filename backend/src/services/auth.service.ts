@@ -23,14 +23,13 @@ import type { UserPayload, TokenType, LoginInfo } from '../typings/auth';
 
 @Service()
 export class AuthService {
-
-    /* Query SQL Login
-       userQuery = SELECT * FROM user WHERE email = body.email
-       IF MATCH
-          IF bcryptCompare userQuery.password and body.password
-          THEN GENERATE JWT TOKEN SET TO CLIENT AND RETURN userQuery
-       ELSE
-          RETURN ERROR
+    /*  Query SQL Login
+        userQuery = SELECT * FROM user WHERE email = body.email
+            IF MATCH
+                IF bcryptCompare userQuery.password and body.password
+                    THEN GENERATE JWT TOKEN SET TO CLIENT AND RETURN userQuery
+            ELSE
+                RETURN ERROR
     */
     async login({ email, password }: LoginDTO): Promise<LoginInfo> {
         const foundUser = await User.findOneBy({ email });
@@ -60,6 +59,10 @@ export class AuthService {
         return { accessToken, refreshToken, foundUser };
     }
 
+    /*  Query SQL Register
+        INSERT INTO TABLE user VALUES(user.name, user.email,
+        user.password, user.alamat, user.saldo, user.tglLahir, user.phone)
+    */
     async register(rawUser: RegisterDTO) {
         const user = User.create({ ...rawUser });
 
@@ -167,5 +170,4 @@ export class AuthService {
             // token is invalid, so returning `undefined` instead
         }
     }
-
 }

@@ -80,8 +80,8 @@ export const Errors = {
         StatusCodes.FORBIDDEN
     ),
 
-    USER_NOT_FOUND: new ResponseError(
-        'Cannot find user',
+    BOOK_NOT_FOUND: new ResponseError(
+        'Cannot find book',
         StatusCodes.NOT_FOUND
     ),
 };

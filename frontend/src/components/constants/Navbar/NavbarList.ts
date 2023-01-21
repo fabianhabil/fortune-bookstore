@@ -10,7 +10,7 @@ export interface NavbarListTypes {
 
 export const NavbarList: NavbarListTypes[] = [
     {
-        href: '/browse',
+        href: '/books',
         title: 'Browse Books',
         hideIfLoggedIn: false,
         adminPage: false
