@@ -60,19 +60,20 @@ export class AuthService {
     }
 
     /*  Query SQL Register
-        INSERT INTO TABLE user VALUES(user.name, user.email,
-        user.password, user.alamat, user.saldo, user.tglLahir, user.phone)
+        INSERT INTO TABLE user VALUES(name, email,
+        password, alamat, saldo, tglLahir, phone)
     */
-    async register(rawUser: RegisterDTO) {
-        const user = User.create({ ...rawUser });
+    async register(body: RegisterDTO) {
+        const foundUser = await User.findOneBy({ email: body.email });
 
-        const foundUser = await User.findOneBy({ email: user.email });
         if (foundUser) {
             throw new ResponseError(
                 'This email is already registered',
                 StatusCodes.CONFLICT
             );
         }
+
+        const user = User.create({ ...body });
 
         user.password = await this.hashPassword(user.password);
         await User.save(user);
