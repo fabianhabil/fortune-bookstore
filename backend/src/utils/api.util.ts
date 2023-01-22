@@ -94,5 +94,10 @@ export const Errors = {
     TRANSAKSI_NOT_FOUND: new ResponseError(
         'Transaksi not found',
         StatusCodes.NOT_FOUND
+    ),
+
+    UNSUPPORTED_IMAGE_TYPE: new ResponseError(
+        'Unsupported Image Type',
+        StatusCodes.BAD_REQUEST
     )
 };

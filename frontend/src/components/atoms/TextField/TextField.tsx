@@ -39,7 +39,7 @@ export const textFieldStyles = makeStyles(() => ({
         }
     },
     inputTextFieldEvent: {
-        fontFamily: 'Karla',
+        fontFamily: 'Inter',
         input: {
             color: 'black'
         },

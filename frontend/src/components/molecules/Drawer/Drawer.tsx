@@ -58,7 +58,8 @@ const DrawerComponent = () => {
                             sx={{
                                 '&:hover': {
                                     opacity: 0.7
-                                }
+                                },
+                                fontSize: '16px'
                             }}
                         >
                             Hi,{' '}
@@ -164,23 +165,26 @@ const DrawerComponent = () => {
                             alignItems='center'
                             spacing={2}
                         >
-                            <Grid item>
-                                <Typography
-                                    sx={{
-                                        '&:hover': {
-                                            opacity: 0.7
-                                        }
-                                    }}
-                                >
-                                    Hi,{' '}
+                            {userData?.name ? (
+                                <Grid item>
                                     <Typography
-                                        component='span'
-                                        sx={{ textDecoration: 'underline' }}
+                                        sx={{
+                                            '&:hover': {
+                                                opacity: 0.7
+                                            },
+                                            fontSize: '18px'
+                                        }}
                                     >
-                                        {userData?.name}
+                                        Hi,{' '}
+                                        <Typography
+                                            component='span'
+                                            sx={{ textDecoration: 'underline' }}
+                                        >
+                                            {userData?.name}
+                                        </Typography>
                                     </Typography>
-                                </Typography>
-                            </Grid>
+                                </Grid>
+                            ) : null}
                             {NavbarList.map(
                                 (data: NavbarListTypes, index: number) => {
                                     return (

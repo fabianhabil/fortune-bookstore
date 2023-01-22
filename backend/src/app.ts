@@ -1,8 +1,6 @@
 import { useExpressServer, useContainer } from 'routing-controllers';
-// import cors from 'cors';
 import helmet from 'helmet';
 import express from 'express';
-// import handleLogging from './middlewares/logger.middleware';
 import config from './configs/config';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -21,6 +19,30 @@ const app = express();
 app.use(compression());
 app.use(helmet());
 app.use(cookieParser());
+app.use((req, res, next) => {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+
+    // Request headers you wish to allow
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type'
+    );
+
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    // Pass to next layer of middleware
+    next();
+});
+app.use('/public/images', express.static(path.join(__dirname, 'images')));
+
 useContainer(Container);
 
 useExpressServer(app, {

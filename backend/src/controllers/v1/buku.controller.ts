@@ -7,14 +7,17 @@ import {
     Param,
     Post,
     Put,
-    Res
+    Req,
+    Res,
+    UseBefore
 } from 'routing-controllers';
 import { Service } from 'typedi';
 import { BukuService } from '../../services/buku.service';
-import { sendResponse } from '../../utils/api.util';
+import { Errors, sendResponse } from '../../utils/api.util';
 import { Response } from 'express';
 import { CreateBukuDTO, EditBukuDTO } from '../../validations/buku.validation';
 import { UserPayload } from '../../typings/auth';
+import multer from 'multer';
 
 @Service()
 @JsonController('/v1/books')
@@ -42,12 +45,26 @@ export class BukuController {
     }
 
     @Post('/')
+    @UseBefore(
+        multer({ dest: '../../images' }).fields([
+            { maxCount: 1, name: 'bukuImage' }
+        ])
+    )
     async addBook(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        @Req() req: any,
         @Res() res: Response,
         @Body() dto: CreateBukuDTO,
         @CurrentUser({ required: true }) user: UserPayload
     ) {
         const { userId } = user;
+        const allowedMimeTypes = ['image/jpg'];
+        const fileOne = req.file.bukuImage[0];
+
+        if (!allowedMimeTypes.includes(fileOne.mimetype)) {
+            throw Errors.UNSUPPORTED_IMAGE_TYPE;
+        }
+
         await this.service.addBook(userId, dto);
 
         return sendResponse(res, { message: 'Successfuly create one book' });

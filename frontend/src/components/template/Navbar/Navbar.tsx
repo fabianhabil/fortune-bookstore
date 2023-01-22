@@ -9,7 +9,7 @@ const Navbar = () => {
                 position='sticky'
                 elevation={0}
                 sx={{
-                    height: '9vh',
+                    height: { md: '9vh', xs: '12vh' },
                     backgroundColor: 'white',
                     boxShadow: '0 6px 10px #bbbbbb59'
                 }}

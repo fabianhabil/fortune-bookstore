@@ -537,12 +537,6 @@ const RegisterPage = () => {
                                 <DatePicker
                                     closeOnScroll={true}
                                     selected={register.tglLahir}
-                                    // onChange={(date: Date) => {
-                                    //     setRegister({
-                                    //         ...register,
-                                    //         tglLahir: date
-                                    //     });
-                                    // }}
                                     onChange={(date: Date) => {
                                         setRegister((data) => ({
                                             ...data,

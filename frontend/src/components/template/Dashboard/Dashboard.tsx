@@ -53,10 +53,8 @@ const Dashboard = () => {
                         <Grid
                             container
                             sx={{
-                                pr: 2,
-                                flexDirection: { md: 'column', xs: 'row' }
+                                flexDirection: { md: 'column', xs: 'row' },
                             }}
-                            spacing={3}
                         >
                             {ButtonMenuList.map(
                                 (data: ButtonMenuListTypes, index: number) => {
@@ -65,7 +63,12 @@ const Dashboard = () => {
                                             item
                                             key={index}
                                             sx={{
-                                                width: { md: '100%', xs: '50%' }
+                                                width: {
+                                                    md: '100%',
+                                                    xs: '50%'
+                                                },
+                                                p: { xs: 1, md: 0 },
+                                                mb: { md: 2, xs: 0 }
                                             }}
                                         >
                                             <ButtonMenu
@@ -87,7 +90,11 @@ const Dashboard = () => {
                     </Grid>
                 </Grid>
                 <Grid item md={10} xs={12}>
-                    <Grid container sx={{ pt: { md: 0.7, xs: 1 } }}>
+                    <Grid
+                        container
+                        sx={{ pt: { md: 0.7, xs: 1 } }}
+                        direction='column'
+                    >
                         <Grid item>
                             {DashboardPage.map(
                                 (data: React.ReactNode, index: number) => {
