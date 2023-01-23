@@ -3,6 +3,12 @@
 This program is created because for my final project database and learning for Research & Development BNCC @Bandung purpose!
 Seperti pepatah mengatakan, "satu kali dayung, dua pulai terlampaui" :D
 
+## Entity-Relationship Diagram
+![ERD](.github/erd.png)
+
+## Penjelasan Program
+[Youtube](https://youtu.be/kGSquEBQiEI)
+
 ## Backend
 
 This backend is using BNCC Bandung Backend boilerplate and was made by former RnD 33 BNCC Bandung Manager, [Alvian](https://github.com/Alviannn/express-ts-boilerplate). Shout out to him! 

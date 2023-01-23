@@ -17,8 +17,7 @@ export class TransaksiService {
         private readonly userService: UserService,
         protected readonly bukuService: BukuService
     ) {}
-    /*  Query SQL Get All Transaksi
-        transaksiList =
+    /*  Query SQL Get All Transaksi By Id User
         SELECT
             *
         FROM

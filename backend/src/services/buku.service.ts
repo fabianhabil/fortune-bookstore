@@ -14,7 +14,6 @@ export class BukuService {
     constructor(private readonly userService: UserService) {}
 
     /*  Query SQL Get All Buku
-        bukuList =
         SELECT
             buku.id_buku,
             buku.nama,
@@ -83,9 +82,9 @@ export class BukuService {
     }
 
     /*  Query SQL add buku
-        INSERT INTO TABLE buku VALUES(nama, deskripsi, harga, stok,
-            jumlahHalaman, tanggalTerbit, bahasa, berat, lebar, panjang,
-            penerbitId, kategoriBukuId)
+        INSERT INTO TABLE buku VALUES(body.nama, body.deskripsi, body.harga, body.stok,
+            body.jumlahHalaman, body.tanggalTerbit, body.bahasa, body.berat, body.lebar,
+            body.panjang, body.penerbitId, body.kategoriBukuId)
     */
     async addBook(userId: number, dto: CreateBukuDTO, file: any) {
         const isAdmin = await this.userService.isAdmin(userId);
@@ -152,7 +151,28 @@ export class BukuService {
         return book.save();
     }
 
-    /*
+    /*  Query SQL Get All Buku by kategori buku
+        SELECT
+            buku.id_buku,
+            buku.nama,
+            buku.deskripsi,
+            buku.harga,
+            buku.stok,
+            buku.jumlah_halaman,
+            buku.tanggal_terbit,
+            buku.bahasa,
+            buku.berat,
+            buku.lebar,
+            buku.panjang,
+            penerbit.id_penerbit,
+            penerbit.nama,
+            kategori_buku.id_kategori_buku,
+            kategori_buku.nama_kategori
+        FROM
+            buku
+            LEFT JOIN penerbit ON buku.id_penerbit = penerbit.id_penerbit
+            LEFT JOIN kategori_buku on buku.id_kategori_buku = kategori_buku.id_kategori_buku
+        WHERE buku.id_kategori_buku = body.id_kategori_buku
 
     */
 

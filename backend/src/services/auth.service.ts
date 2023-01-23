@@ -60,8 +60,8 @@ export class AuthService {
     }
 
     /*  Query SQL Register
-        INSERT INTO TABLE user VALUES(name, email,
-        password, alamat, saldo, tglLahir, phone)
+        INSERT INTO TABLE user VALUES(body.name, body.email,
+        body.password, body.alamat, DEFAULT, body.tglLahir, body.phone, DEFAULT)
     */
     async register(body: RegisterDTO) {
         const foundUser = await User.findOneBy({ email: body.email });
