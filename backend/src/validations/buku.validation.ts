@@ -7,12 +7,11 @@ import {
     MaxLength
 } from 'class-validator';
 import { BahasaBuku } from '../database/entities/buku.entity';
-import { Double } from 'typeorm';
 
 export class EditBukuDTO {
     @IsString()
     @MaxLength(64)
-    nama!: string;
+    name!: string;
 
     @IsString()
     @MaxLength(128)
@@ -28,13 +27,13 @@ export class EditBukuDTO {
     jumlahHalaman!: number;
 
     @IsDecimal()
-    berat!: Double;
+    berat!: number;
 
     @IsDecimal()
-    lebar!: Double;
+    lebar!: number;
 
     @IsDecimal()
-    panjang!: Double;
+    panjang!: number;
 }
 
 export class CreateBukuDTO extends EditBukuDTO {

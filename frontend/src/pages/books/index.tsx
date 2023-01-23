@@ -1,3 +1,4 @@
+import BrowseBooks from '@/components/template/Books/BrowseBooks/BrowseBooks';
 import Layout from '@/components/template/Layout/Layout';
 import Head from 'next/head';
 
@@ -7,6 +8,7 @@ const Home = () => {
             <Head>
                 <title>Fortune Bookstore | Books</title>
             </Head>
+            <BrowseBooks />
         </>
     );
 };

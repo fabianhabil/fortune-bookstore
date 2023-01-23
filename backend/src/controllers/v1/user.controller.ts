@@ -37,8 +37,11 @@ export class UserController {
         @CurrentUser({ required: true }) user: UserPayload
     ) {
         const { userId } = user;
-        await this.service.topup(userId, dto);
+        const userPayload = await this.service.topup(userId, dto);
 
-        return sendResponse(res, { message: 'Topup success' });
+        return sendResponse(res, {
+            message: 'Topup success',
+            data: { userPayload }
+        });
     }
 }

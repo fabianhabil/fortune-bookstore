@@ -1,4 +1,4 @@
-import Dashboard from '@/components/template/Dashboard/Dashboard';
+import Dashboard from '@/components/template/Dashboard/Dashboard/Dashboard';
 import Layout from '@/components/template/Layout/Layout';
 import Head from 'next/head';
 

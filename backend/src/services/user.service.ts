@@ -4,7 +4,7 @@ import { Errors } from '../utils/api.util';
 
 @Service()
 export class UserService {
-    /*  Query Selector Get User
+    /*  Query SQL Get User
         SELECT * FROM user WHERE userId = body.userId
     */
     async getProfile(userId: number): Promise<User | null> {
@@ -20,14 +20,19 @@ export class UserService {
         return user;
     }
 
-    /*
-
+    /*  Query SQL Topup User
+        UPDATE user
+        SET
+            saldo = saldo + body.tambahSaldo
+        WHERE id_user = body.id_user
     */
     async topup(userId: number, dto: { saldo: number }) {
         const user = (await this.getProfile(userId)) as User;
-        user.saldo = dto.saldo;
+        user.saldo = user.saldo + dto.saldo;
 
         await user?.save();
+
+        return user;
     }
 
     async isAdmin(userId: number): Promise<boolean> {

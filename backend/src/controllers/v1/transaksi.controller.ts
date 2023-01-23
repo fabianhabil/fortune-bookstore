@@ -24,8 +24,12 @@ export class TransaksiController {
     constructor(private readonly service: TransaksiService) {}
 
     @Get('/')
-    async getTransaksi(@Res() res: Response) {
-        const transaksi = await this.service.get();
+    async getTransaksi(
+        @Res() res: Response,
+        @CurrentUser({ required: true }) user: UserPayload
+    ) {
+        const { userId } = user;
+        const transaksi = await this.service.get(userId);
 
         return sendResponse(res, {
             message: 'Successfully found all transaksi',
@@ -40,9 +44,12 @@ export class TransaksiController {
         @CurrentUser({ required: true }) user: UserPayload
     ) {
         const { userId } = user;
-        await this.service.createTransaksi(dto, userId);
+        const userPayload = await this.service.createTransaksi(dto, userId);
 
-        return sendResponse(res, { message: 'Successfully create transaksi' });
+        return sendResponse(res, {
+            message: 'Successfully create transaksi',
+            data: { userPayload }
+        });
     }
 
     @Put('/')

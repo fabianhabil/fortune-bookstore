@@ -50,6 +50,9 @@ export class Buku extends BaseEntity {
     @Column({ type: 'double' })
     panjang!: Double;
 
+    @Column({ name: 'image_path' })
+    imagePath!: string;
+
     @Column({ name: 'id_penerbit', select: false })
     penerbitId!: string;
 

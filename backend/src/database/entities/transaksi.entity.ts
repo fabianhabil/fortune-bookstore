@@ -29,13 +29,13 @@ export class Transaksi extends BaseEntity {
     @Column()
     total!: number;
 
-    @Column({
-        name: 'status_transaksi',
-        type: 'enum',
-        enum: TransaksiEnum,
-        default: TransaksiEnum['Belum Dibayar']
-    })
-    statusTransaksi!: TransaksiEnum;
+    // @Column({
+    //     name: 'status_transaksi',
+    //     type: 'enum',
+    //     enum: TransaksiEnum,
+    //     default: TransaksiEnum['Belum Dibayar']
+    // })
+    // statusTransaksi!: TransaksiEnum;
 
     @Column({ name: 'id_buku', select: false })
     bukuId!: number;
@@ -43,7 +43,7 @@ export class Transaksi extends BaseEntity {
     @Column({ name: 'id_user', select: false })
     userId!: number;
 
-    @ManyToOne(() => Buku)
+    @ManyToOne(() => Buku, (buku) => buku.penerbit)
     @JoinColumn({ name: 'id_buku' })
     buku!: Buku;
 

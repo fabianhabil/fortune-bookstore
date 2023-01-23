@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-len */
 import { Service } from 'typedi';
 import { Buku } from '../database/entities/buku.entity';
@@ -86,14 +87,19 @@ export class BukuService {
             jumlahHalaman, tanggalTerbit, bahasa, berat, lebar, panjang,
             penerbitId, kategoriBukuId)
     */
-    async addBook(userId: number, dto: CreateBukuDTO) {
+    async addBook(userId: number, dto: CreateBukuDTO, file: any) {
         const isAdmin = await this.userService.isAdmin(userId);
 
         if (!isAdmin) {
             throw Errors.NO_PERMISSION;
         }
 
-        const book = Buku.create({ ...dto });
+        const book = Buku.create({
+            ...dto,
+            tanggalTerbit: new Date(dto.tanggalTerbit),
+            imagePath: file.originalname
+        });
+
         await Buku.save(book);
     }
 
@@ -134,7 +140,7 @@ export class BukuService {
         }
 
         const book = await this.getBook(bukuId);
-        book.name = dto.nama ?? book.name;
+        book.name = dto.name ?? book.name;
         book.deskripsi = dto.deskripsi ?? book.deskripsi;
         book.harga = dto.harga ?? book.harga;
         book.stok = dto.stok ?? book.stok;
@@ -144,5 +150,29 @@ export class BukuService {
         book.panjang = dto.panjang ?? book.panjang;
 
         return book.save();
+    }
+
+    /*
+
+    */
+
+    async getBookByFilter(penerbitId: string, kategoriId: number) {
+        const query: any = {};
+
+        if (penerbitId !== 'all') {
+            query.penerbitId = penerbitId;
+        }
+
+        if (kategoriId !== 0) {
+            query.kategoriBukuId = kategoriId;
+        }
+
+        const buku = await Buku.find({
+            where: query,
+            select: { penerbitId: false, kategoriBukuId: false },
+            relations: { kategoriBuku: true, penerbit: true }
+        });
+
+        return buku;
     }
 }

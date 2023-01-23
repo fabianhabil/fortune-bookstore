@@ -1,12 +1,14 @@
 import Layout from '@/components/template/Layout/Layout';
+import Transactions from '@/components/template/Transactions/Transactions';
 import Head from 'next/head';
 
 const Home = () => {
     return (
         <>
             <Head>
-                <title>Fortune Bookstore | Books</title>
+                <title>Fortune Bookstore | Transactions</title>
             </Head>
+            <Transactions />
         </>
     );
 };

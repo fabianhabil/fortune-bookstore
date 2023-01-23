@@ -9,7 +9,8 @@ const NavbarLink: React.FC<NavbarListTypes> = ({
     adminPage,
     isAuthenticated,
     isAdmin,
-    onDrawer
+    onDrawer,
+    needLoggedIn
 }) => {
     const render = (): boolean => {
         if (isAuthenticated) {
@@ -27,8 +28,11 @@ const NavbarLink: React.FC<NavbarListTypes> = ({
                 }
             }
         } else {
-            if (!adminPage) return true;
-            return false;
+            if (needLoggedIn) return false;
+            else {
+                if (!adminPage) return true;
+                return true;
+            }
         }
     };
 

@@ -1,4 +1,7 @@
-import { InputLabel, Select, Typography } from '@mui/material';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { InputLabel, MenuItem, Select, Typography } from '@mui/material';
+
+import type { SelectChangeEvent } from '@mui/material';
 
 const SelectInputBookInfo = ({
     label,
@@ -8,11 +11,8 @@ const SelectInputBookInfo = ({
 }: {
     label: string;
     value: number;
-    onChange: (_arg: number) => void;
-    data: {
-        value: number;
-        title: string;
-    };
+    onChange: (_arg: SelectChangeEvent<number>) => void;
+    data: any;
 }) => {
     return (
         <>
@@ -28,7 +28,17 @@ const SelectInputBookInfo = ({
                     {label}
                 </Typography>
             </InputLabel>
-            <Select value={value} label='label' onChange={onChange}>
+            <Select value={value} label={label} onChange={onChange} fullWidth>
+                <MenuItem value={0}>Please choose {label}!</MenuItem>
+                {data.map(
+                    (data: any, index: number) => {
+                        return (
+                            <MenuItem value={index + 1} key={index}>
+                                {data.title || data.nama}
+                            </MenuItem>
+                        );
+                    }
+                )}
                 {/* {data} */}
             </Select>
         </>

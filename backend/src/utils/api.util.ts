@@ -99,5 +99,10 @@ export const Errors = {
     UNSUPPORTED_IMAGE_TYPE: new ResponseError(
         'Unsupported Image Type',
         StatusCodes.BAD_REQUEST
+    ),
+
+    PENERBIT_NAME_CONFLICT: new ResponseError(
+        'Publisher Name is duplicate!',
+        StatusCodes.CONFLICT
     )
 };

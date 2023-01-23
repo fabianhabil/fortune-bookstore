@@ -8,5 +8,5 @@ export const ButtonMenuList: ButtonMenuListTypes[] = [
     { title: 'Books' },
     { title: 'Publisher' },
     { title: 'Books Category' },
-    { title: 'Transaction' }
+    // { title: 'Transaction' }
 ];

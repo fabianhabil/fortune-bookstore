@@ -75,7 +75,7 @@ const HomePage = () => {
                         </Grid>
                         <Grid item>
                             <Link
-                                href='/browse'
+                                href='/books'
                                 style={{
                                     color: 'inherit',
                                     textDecoration: 'none'

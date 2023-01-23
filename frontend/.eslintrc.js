@@ -29,7 +29,7 @@ module.exports = {
             { argsIgnorePattern: '^_' }
         ],
         // "no-nested-ternary": "off",
-        // "@typescript-eslint/no-explicit-any": "off",
+        '@typescript-eslint/no-explicit-any': 'off',
         // "linebreak-style": 0,
         // "react-hooks/exhaustive-deps": "off",
         // "@next/next/no-img-element": "off",

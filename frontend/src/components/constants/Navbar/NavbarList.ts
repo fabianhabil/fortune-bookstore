@@ -6,6 +6,7 @@ export interface NavbarListTypes {
     isAuthenticated?: boolean;
     isAdmin?: boolean;
     onDrawer?: boolean;
+    needLoggedIn?: boolean;
 }
 
 export const NavbarList: NavbarListTypes[] = [
@@ -13,19 +14,35 @@ export const NavbarList: NavbarListTypes[] = [
         href: '/books',
         title: 'Browse Books',
         hideIfLoggedIn: false,
-        adminPage: false
+        adminPage: false,
+        needLoggedIn: false
     },
-    { href: '/login', title: 'Login', hideIfLoggedIn: true, adminPage: false },
+    {
+        href: '/transactions',
+        title: 'Transactions',
+        hideIfLoggedIn: false,
+        adminPage: false,
+        needLoggedIn: true
+    },
+    {
+        href: '/login',
+        title: 'Login',
+        hideIfLoggedIn: true,
+        adminPage: false,
+        needLoggedIn: false
+    },
     {
         href: '/register',
         title: 'Register',
         hideIfLoggedIn: true,
-        adminPage: false
+        adminPage: false,
+        needLoggedIn: false
     },
     {
         href: '/dashboard',
         title: 'Dashboard',
         hideIfLoggedIn: false,
-        adminPage: true
+        adminPage: true,
+        needLoggedIn: true
     }
 ];

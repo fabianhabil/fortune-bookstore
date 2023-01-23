@@ -26,13 +26,6 @@ const PopperAccount = ({
                 <MenuItem
                     onClick={() => {
                         handleCloseMenu();
-                    }}
-                >
-                    Edit Profile
-                </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        handleCloseMenu();
                         logout();
                     }}
                 >

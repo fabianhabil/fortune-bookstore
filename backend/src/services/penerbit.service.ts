@@ -34,6 +34,12 @@ export class PenerbitService {
         }
 
         const penerbitId = dto.nama.replace(/ /g, '-').toLowerCase();
+        const checkPenerbit = await Penerbit.findOneBy({ penerbitId });
+
+        if (checkPenerbit) {
+            throw Errors.PENERBIT_NAME_CONFLICT;
+        }
+
         const penerbit = Penerbit.create({ penerbitId, ...dto });
 
         await Penerbit.save(penerbit);

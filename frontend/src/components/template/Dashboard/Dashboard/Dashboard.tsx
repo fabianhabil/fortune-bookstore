@@ -2,14 +2,14 @@ import ButtonMenu from '@/components/atoms/Dashboard/ButtonMenu/ButtonMenu';
 import ToastError from '@/components/atoms/Toast/ToastError';
 import type { ButtonMenuListTypes } from '@/components/constants/Dashboard/ButtonMenuList';
 import { ButtonMenuList } from '@/components/constants/Dashboard/ButtonMenuList';
-import BooksCategoryDashboard from '@/components/molecules/Dashboard/BooksCategoryDashboard/BooksCategoryDashboard';
-import BooksDashboard from '@/components/molecules/Dashboard/BooksDashboard/BooksDashboard';
-import PublisherDashboard from '@/components/molecules/Dashboard/PublisherDashboard/PublisherDashboard';
-import TransactionDashboard from '@/components/molecules/Dashboard/TransactionDashboard/TransactionDashboard';
+import BooksCategoryDashboard from '@/components/template/Dashboard/BooksCategoryDashboard/BooksCategoryDashboard';
+import BooksDashboard from '../BooksDashboard/BooksDashboard';
 import { AuthContext } from '@/contexts/AuthContext/AuthContext';
 import { Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
+import PublisherDashboard from '../PublisherDashboard/PublisherDashboard';
+import TransactionDashboard from '../TransactionDashboard/TransactionDashboard';
 
 const DashboardPage = [
     <BooksDashboard key={1} />,
@@ -53,7 +53,7 @@ const Dashboard = () => {
                         <Grid
                             container
                             sx={{
-                                flexDirection: { md: 'column', xs: 'row' },
+                                flexDirection: { md: 'column', xs: 'row' }
                             }}
                         >
                             {ButtonMenuList.map(

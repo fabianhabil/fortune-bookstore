@@ -11,9 +11,6 @@ export class CreateTransaksiDTO {
 
     @IsInt()
     bukuId!: number;
-
-    @IsInt()
-    userId!: number;
 }
 
 export class BayarTransaksiDTO {

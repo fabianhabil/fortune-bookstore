@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     Body,
     CurrentUser,
@@ -15,9 +16,9 @@ import { Service } from 'typedi';
 import { BukuService } from '../../services/buku.service';
 import { Errors, sendResponse } from '../../utils/api.util';
 import { Response } from 'express';
-import { CreateBukuDTO, EditBukuDTO } from '../../validations/buku.validation';
 import { UserPayload } from '../../typings/auth';
 import multer from 'multer';
+import uploader from '../../utils/uploader.util';
 
 @Service()
 @JsonController('/v1/books')
@@ -34,6 +35,20 @@ export class BukuController {
         });
     }
 
+    @Get('/:penerbitId/:kategoriId')
+    async getBookByFilter(
+        @Res() res: Response,
+        @Param('penerbitId') penerbitId: string,
+        @Param('kategoriId') kategoriId: number
+    ) {
+        const book = await this.service.getBookByFilter(penerbitId, kategoriId);
+
+        return sendResponse(res, {
+            message: 'Successfully found all books',
+            data: { book }
+        });
+    }
+
     @Get('/:bookId')
     async getBook(@Res() res: Response, @Param('bookId') bookId: number) {
         const book = await this.service.getBook(bookId);
@@ -46,26 +61,26 @@ export class BukuController {
 
     @Post('/')
     @UseBefore(
-        multer({ dest: '../../images' }).fields([
+        multer({ dest: '../../images', storage: uploader }).fields([
             { maxCount: 1, name: 'bukuImage' }
         ])
     )
     async addBook(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         @Req() req: any,
         @Res() res: Response,
-        @Body() dto: CreateBukuDTO,
+        @Body() dto: any,
         @CurrentUser({ required: true }) user: UserPayload
     ) {
         const { userId } = user;
-        const allowedMimeTypes = ['image/jpg'];
-        const fileOne = req.file.bukuImage[0];
+        const allowedMimeTypes = ['image/jpeg'];
+        const fileOne = req.files.bukuImage[0];
 
         if (!allowedMimeTypes.includes(fileOne.mimetype)) {
             throw Errors.UNSUPPORTED_IMAGE_TYPE;
         }
 
-        await this.service.addBook(userId, dto);
+        const fileName = await this.service.addBook(userId, dto, fileOne);
+        fileOne.originalname = fileName;
 
         return sendResponse(res, { message: 'Successfuly create one book' });
     }
@@ -87,7 +102,7 @@ export class BukuController {
         @Res() res: Response,
         @Param('bookId') bookId: number,
         @CurrentUser({ required: true }) user: UserPayload,
-        @Body() dto: EditBukuDTO
+        @Body() dto: any
     ) {
         const { userId } = user;
         await this.service.editBook(userId, bookId, dto);
